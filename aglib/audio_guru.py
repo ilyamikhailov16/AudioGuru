@@ -2,6 +2,7 @@ from .models.mood_model import MoodModel, AudioProcessorMood
 from .models.genre_model import GenreModel, AudioProcessorGenre
 from .models.voice_model import VoiceModel, AudioProcessorVoice
 import numpy as np
+from typing import Union
 from numpy import ndarray
 import librosa
 
@@ -86,24 +87,14 @@ class AudioGuru:
             sorted_unique_values = unique_values[sorted_indices]
             sorted_counts = counts[sorted_indices]
 
-            tag = [
-                (
-                    sorted_unique_values[0],
-                    round(sorted_counts[0] / sum(sorted_counts), 2),
-                )
-            ]
-            if len(sorted_unique_values) > 1:
+            sum_of_counts = sum(sorted_counts)
+            tag = []
+
+            for i in range(len(sorted_unique_values)):
                 tag.append(
                     (
-                        sorted_unique_values[1],
-                        round(sorted_counts[1] / sum(sorted_counts), 2),
-                    )
-                )
-            if len(sorted_unique_values) > 2:
-                tag.append(
-                    (
-                        sorted_unique_values[2],
-                        round(sorted_counts[2] / sum(sorted_counts), 2),
+                        sorted_unique_values[i],
+                        round(sorted_counts[i] / sum_of_counts, 4),
                     )
                 )
 
@@ -114,7 +105,9 @@ class AudioGuru:
 
         return tags
 
-    def __call__(self, path):
+    def __call__(
+        self, path, mode_tag: bool = True
+    ) -> Union[tuple[str], tuple[list[tuple], list[tuple], str]]:
         """A call function to predict mood, genre, and tempo of an audio file."""
         labels = (
             ("aggressive", "dramatic", "happy", "romantic", "sad"),
@@ -133,5 +126,8 @@ class AudioGuru:
         )
 
         mood, genre, tempo = self.process_audio(path, labels)
+
+        if mode_tag:
+            return mood[0][0], genre[0][0], tempo
 
         return mood, genre, tempo

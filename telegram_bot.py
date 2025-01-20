@@ -28,7 +28,7 @@ WELCOME_TEXT = (
     "2. Я начну обработку и пришлю результат."
 )
 
-IMAGE_PATH = "./telegram_attachments/welcome.jpg"
+WELCOME_IMAGE_PATH = "./telegram_attachments/welcome.jpg"
 
 RESPONSE_END = "\nНе удивляйся, если что-то не совпало с твоими ожиданиями — даже премудрого AudioGuru иногда подводит слух!"
 
@@ -36,7 +36,9 @@ RESPONSE_END = "\nНе удивляйся, если что-то не совпа�
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     """Отправляет визитную карточку на команду /start с изображением."""
     await update.message.reply_text(WELCOME_TEXT)
-    await context.bot.send_photo(chat_id=update.effective_chat.id, photo=IMAGE_PATH)
+    await context.bot.send_photo(
+        chat_id=update.effective_chat.id, photo=WELCOME_IMAGE_PATH
+    )
 
 
 async def info_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
@@ -102,32 +104,23 @@ async def audio_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> N
 
                 logger.info(f"Add to directory audio file: {audio_file.file_name}")
 
-                mood, genre, tempo = audio_guru(file_path)
+                mood, genre, tempo = audio_guru(file_path, mode_tag=False)
 
                 name = file_path.replace("\\", ".")
                 name = name.split(".")[-2]
 
-                output_tag_information = (
-                    "Ты подал мне аудиотрек, а я, как великий мастер звуковых искусств, разметил его.\n"
-                    "\nВот, что получилось:\n\n"
-                )
+                output_tag_information = "Вот, что получилось:\n\n"
 
                 mood_pattern = ""
-                mood_pattern += f"   {mood[0][0]} - {int(mood[0][1]*100)}%\n\n"
-                if len(mood) > 1:
-                    mood_pattern += f"   {mood[1][0]} - {int(mood[1][1]*100)}%\n\n"
-                if len(mood) > 2:
-                    mood_pattern += f"   {mood[2][0]} - {int(mood[2][1]*100)}%\n\n"
-
                 genre_pattern = ""
-                genre_pattern += f"   {genre[0][0]} - {int(genre[0][1]*100)}%\n\n"
-                if len(genre) > 1:
-                    genre_pattern += f"   {genre[1][0]} - {int(genre[1][1]*100)}%\n\n"
-                if len(genre) > 2:
-                    genre_pattern += f"   {genre[2][0]} - {int(genre[2][1]*100)}%\n\n"
+
+                for i in range(len(mood)):
+                    mood_pattern += f"   {mood[i][0]} - {mood[i][1]*100}%\n\n"
+
+                for i in range(len(genre)):
+                    genre_pattern += f"   {genre[i][0]} - {genre[i][1]*100}%\n\n"
 
                 pattern = (
-                    f"- Название трека: {name}\n\n"
                     f"- Распознанные настроения:\n\n{mood_pattern}"
                     f"- Распознанные жанры:\n\n{genre_pattern}"
                     f"- Темп: {tempo}\n"

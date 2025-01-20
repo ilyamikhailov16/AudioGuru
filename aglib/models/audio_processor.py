@@ -5,7 +5,6 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.preprocessing import LabelEncoder
 from sklearn.model_selection import train_test_split
 from typing import Optional, Union
-from numpy.typing import ArrayLike
 from abc import ABC, abstractmethod
 from inspect import getsourcefile
 from os.path import abspath
