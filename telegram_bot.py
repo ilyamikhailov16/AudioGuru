@@ -113,18 +113,18 @@ async def audio_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> N
                 )
 
                 mood_pattern = ""
-                mood_pattern += f"   {mood[0][0]} {int(mood[0][1]*100)}%\n\n"
+                mood_pattern += f"   {mood[0][0]} - {int(mood[0][1]*100)}%\n\n"
                 if len(mood) > 1:
-                    mood_pattern += f"   {mood[1][0]} {int(mood[1][1]*100)}%\n\n"
+                    mood_pattern += f"   {mood[1][0]} - {int(mood[1][1]*100)}%\n\n"
                 if len(mood) > 2:
-                    mood_pattern += f"   {mood[2][0]} {int(mood[2][1]*100)}%\n\n"
+                    mood_pattern += f"   {mood[2][0]} - {int(mood[2][1]*100)}%\n\n"
 
                 genre_pattern = ""
-                genre_pattern += f"   {genre[0][0]} {int(genre[0][1]*100)}%\n\n"
+                genre_pattern += f"   {genre[0][0]} - {int(genre[0][1]*100)}%\n\n"
                 if len(genre) > 1:
-                    genre_pattern += f"   {genre[1][0]} {int(genre[1][1]*100)}%\n\n"
+                    genre_pattern += f"   {genre[1][0]} - {int(genre[1][1]*100)}%\n\n"
                 if len(genre) > 2:
-                    genre_pattern += f"   {genre[2][0]} {int(genre[2][1]*100)}%\n\n"
+                    genre_pattern += f"   {genre[2][0]} - {int(genre[2][1]*100)}%\n\n"
 
                 pattern = (
                     f"- Название трека: {name}\n\n"
