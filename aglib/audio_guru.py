@@ -117,7 +117,7 @@ class AudioGuru:
     def __call__(self, path):
         """A call function to predict mood, genre, and tempo of an audio file."""
         labels = (
-            ("energetic", "dramatic", "happy", "romantic", "sad"),
+            ("aggressive", "dramatic", "happy", "romantic", "sad"),
             (
                 "blues",
                 "classical",
