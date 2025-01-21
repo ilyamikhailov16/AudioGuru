@@ -10,9 +10,9 @@ from inspect import getsourcefile
 from os.path import abspath
 import joblib
 
-SAMPLING_RATE = 22050
-AUDIO_FRAME_SIZE = 1024
-AUDIO_HOP_LENGTH = 512
+SAMPLING_RATE = 44100
+AUDIO_FRAME_SIZE = 2048
+AUDIO_HOP_LENGTH = AUDIO_FRAME_SIZE // 2
 
 
 class AudioProcessor(ABC):
@@ -110,11 +110,74 @@ class AudioProcessor(ABC):
         pass
 
     def save_scaler(self):
-        """Saves the scaler to the same folder as the processor's class."""
+        """Saves the scaler to the same folder as the processor's class.
+
+        This method saves the current state of the scaler object to a file in the
+        same directory as the processor's class. The scaler is saved with a filename
+        derived from the processor's path, using the base name followed by
+        '_scaler.save'.
+
+        Raises:
+            Exception: If there are any issues encountered during the saving process.
+
+        Example:
+            >>> processor.save_scaler()
+            # This will save the scaler to a file named '<processor_base_name>_scaler.save'
+        """
         load_name, extension = self.processor_path.split(".")
         joblib.dump(self.scaler, f"{load_name}_scaler.save")
 
     def load_scaler(self):
-        """Loads the scaler from the same folder as the processor's class."""
+        """Loads the scaler from the same folder as the processor's class.
+
+        This method loads a pre-trained scaler object, which is used to normalize
+        or standardize data, from a file located in the same directory as the
+        processor's class. The scaler is expected to be saved with a filename
+        derived from the processor's path.
+
+        The method assumes that the scaler is saved in a file named with the
+        processor's base name followed by '_scaler.save'.
+
+        Raises:
+            FileNotFoundError: If the scaler file does not exist at the expected path.
+            Exception: For any other issues encountered during the loading process.
+
+        Example:
+            >>> processor.load_scaler()
+            >>> print(processor.scaler)
+            StandardScaler()  # Example output, depending on the scaler type
+        """
         load_name, extension = self.processor_path.split(".")
         self.scaler = joblib.load(f"{load_name}_scaler.save")
+
+    def _cut(self, wav, sr) -> list[np.array]:
+        """Cuts audio to 3-second segments.
+
+        This method takes an audio waveform and its sampling rate, and divides the
+        audio into segments of 3 seconds each. It discards any remaining audio that
+        does not fit into a complete 3-second segment.
+
+        Args:
+            wav (list or numpy.ndarray): The audio waveform data, represented as a
+                list or array of amplitude values.
+            sr (int): The sampling rate of the audio, in samples per second.
+
+        Returns:
+            list: A list of audio segments, where each segment is a sublist or
+            sub-array of the original waveform, representing 3 seconds of audio.
+
+        Example:
+            >>> audio_segments = _cut(wav, sr)
+            >>> len(audio_segments[0]) == sr * 3  # Each segment is 3 seconds long
+            True
+        """
+        three_seconds_samples = sr * 3
+        length_without_residue = len(wav) - (len(wav) % three_seconds_samples)
+        return [
+            wav[i : i + three_seconds_samples]
+            for i in range(
+                0,
+                (length_without_residue - three_seconds_samples) + 1,
+                three_seconds_samples,
+            )
+        ]

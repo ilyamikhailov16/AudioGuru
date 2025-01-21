@@ -25,12 +25,12 @@ class AudioGuru:
         ]  # AudioProcessorVoice()
         self._set_up_models()
 
-    def _set_up_models(self):
+    def _set_up_models(self) -> None:
         """Loads the machine learning models."""
         for model in self.models:
             model.load_model()
 
-    def get_audio_tempo(self, wav: ndarray, sr: int):
+    def get_audio_tempo(self, wav: ndarray, sr: int) -> str:
         """Calculates the tempo of the audio and classifies it.
 
         Args:
@@ -108,7 +108,34 @@ class AudioGuru:
     def __call__(
         self, path, mode_tag: bool = True
     ) -> Union[tuple[str], tuple[list[tuple], list[tuple], str]]:
-        """A call function to predict mood, genre, and tempo of an audio file."""
+        """Predicts mood, genre, and tempo of an audio file.
+
+        This method processes an audio file to predict its mood, genre, and tempo.
+        It can return either a simplified output with the top predictions or detailed
+        lists of predictions based on the `mode_tag` parameter.
+
+        Args:
+            path (str): The file path to the audio file to be analyzed.
+            mode_tag (bool, optional): If True, returns only the top mood, genre, and
+                tempo prediction. If False, returns detailed lists of predictions.
+                Defaults to True.
+
+        Returns:
+            Union[tuple[str], tuple[list[tuple], list[tuple], str]]:
+            - If `mode_tag` is True, returns a tuple of the top mood, genre, and tempo
+            as strings.
+            - If `mode_tag` is False, returns a tuple containing:
+            - A list of tuples for mood predictions, each tuple containing a mood
+                and its associated score.
+            - A list of tuples for genre predictions, each tuple containing a genre
+                and its associated score.
+            - A string representing the tempo.
+
+        Example:
+            >>> mood, genre, tempo = __call__('path/to/audio/file.wav')
+            >>> print(mood, genre, tempo)
+            'happy' 'pop' '120 BPM'
+        """
         labels = (
             ("aggressive", "dramatic", "happy", "romantic", "sad"),
             (
@@ -124,10 +151,7 @@ class AudioGuru:
                 "rock",
             ),
         )
-
         mood, genre, tempo = self.process_audio(path, labels)
-
         if mode_tag:
             return mood[0][0], genre[0][0], tempo
-
         return mood, genre, tempo

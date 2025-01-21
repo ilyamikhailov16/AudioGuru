@@ -34,7 +34,7 @@ class GenreModel(Model):
             x (Tensor): Input tensor containing audio features.
 
         Returns:
-            Tensor: Output tensor containing model predictions for each of the 4 genres.
+            Tensor: Output tensor containing model predictions for each of the 10 genres.
         """
         x = self.linear1(x)
         x = self.act1(x)

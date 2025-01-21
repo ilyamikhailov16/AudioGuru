@@ -20,10 +20,8 @@ class AudioProcessorGenre(AudioProcessor):
         Processes audio data and extracts features.
 
         Args:
-            audio (np.ndarray): Audio data as a NumPy array.
+            wav (np.ndarray): Audio data as a NumPy array.
             sr (float): Sampling rate of the audio. Defaults to SAMPLING_RATE.
-            n_fft (int): Number of FFT components. Defaults to AUDIO_FRAME_SIZE.
-            hop_length (int): Number of samples between frames. Defaults to AUDIO_HOP_LENGTH.
             scale_data (bool): Whether to scale the data. Defaults to True.
 
         Returns:
@@ -53,8 +51,14 @@ class AudioProcessorGenre(AudioProcessor):
     ) -> list[np.array]:
         """
         Extracts audio features from the provided data.
-        """
 
+        Args:
+            wav (np.ndarray): Audio data as a NumPy array.
+            sr (float): Sampling rate of the audio. Defaults to SAMPLING_RATE.
+
+        Returns:
+            list[np.array]: Extracted audio features
+        """
         audio_features = []
         for y in self._cut(wav, sr):
             chroma_stft = librosa.feature.chroma_stft(y=y, sr=sr)
@@ -97,16 +101,3 @@ class AudioProcessorGenre(AudioProcessor):
             audio_features.append(np.array(features))
 
         return audio_features
-
-    def _cut(self, wav, sr):
-        """Cuts audio to 3-second segments"""
-        three_seconds_samples = sr * 3
-        length_without_residue = len(wav) - (len(wav) % three_seconds_samples)
-        return [
-            wav[i : i + three_seconds_samples]
-            for i in range(
-                0,
-                (length_without_residue - three_seconds_samples) + 1,
-                three_seconds_samples,
-            )
-        ]

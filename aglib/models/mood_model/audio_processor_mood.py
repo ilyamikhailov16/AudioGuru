@@ -103,16 +103,3 @@ class AudioProcessorMood(AudioProcessor):
             audio_features.append(result)
 
         return audio_features
-
-    def _cut(self, wav, sr):
-        """Cuts audio to 3-second segments"""
-        three_seconds_samples = sr * 3
-        length_without_residue = len(wav) - (len(wav) % three_seconds_samples)
-        return [
-            wav[i : i + three_seconds_samples]
-            for i in range(
-                0,
-                (length_without_residue - three_seconds_samples) + 1,
-                three_seconds_samples,
-            )
-        ]
