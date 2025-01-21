@@ -43,11 +43,14 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
 
 async def info_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     """Отправляет документацию, условия пользования и информацию о материалах."""
-    license_text = (
-        "Вся информация в README\n\nGitHub:\n"
+    documentation_license_text = (
+        "Документация проекта:\n"
+        "https://ganjamember.github.io/audio-guru-documentation/\n\n"
+        "GitHub(вся информация в README):\n"
         "https://github.com/ilyamikhailov16/Audio_Guru."
     )
-    await update.message.reply_text(license_text)
+
+    await update.message.reply_text(documentation_license_text)
 
 
 async def credits_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
@@ -155,7 +158,11 @@ async def image_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> N
 
 def main() -> None:
     """Запуск бота."""
-    application = ApplicationBuilder().token("").build()
+    application = (
+        ApplicationBuilder()
+        .token("")
+        .build()
+    )
 
     application.add_handler(CommandHandler("start", start))
     application.add_handler(CommandHandler("about", info_handler))
