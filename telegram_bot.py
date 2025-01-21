@@ -42,18 +42,10 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
 
 
 async def info_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
-    """Отправляет документацию для библиотеки."""
-    info_text = "Документация:\n" "Lorem ipsum."
-    await update.message.reply_text(info_text)
-
-
-async def github_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
-    """Отправляет условия пользования и информацию о материалах."""
+    """Отправляет документацию, условия пользования и информацию о материалах."""
     license_text = (
-        "GitHub:\n"
-        "https://github.com/ilyamikhailov16/Audio_Guru.\n\n"
-        "Pypip:\n"
-        "Lorem ipsum."
+        "Вся информация в README\n\nGitHub:\n"
+        "https://github.com/ilyamikhailov16/Audio_Guru."
     )
     await update.message.reply_text(license_text)
 
@@ -115,10 +107,10 @@ async def audio_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> N
                 genre_pattern = ""
 
                 for i in range(len(mood)):
-                    mood_pattern += f"   {mood[i][0]} - {mood[i][1]*100}%\n\n"
+                    mood_pattern += f"   {mood[i][0]} - {int(mood[i][1]*100)}%\n\n"
 
                 for i in range(len(genre)):
-                    genre_pattern += f"   {genre[i][0]} - {genre[i][1]*100}%\n\n"
+                    genre_pattern += f"   {genre[i][0]} - {int(genre[i][1]*100)}%\n\n"
 
                 pattern = (
                     f"- Распознанные настроения:\n\n{mood_pattern}"
@@ -166,8 +158,7 @@ def main() -> None:
     application = ApplicationBuilder().token("").build()
 
     application.add_handler(CommandHandler("start", start))
-    application.add_handler(CommandHandler("documentation", info_handler))
-    application.add_handler(CommandHandler("about", github_handler))
+    application.add_handler(CommandHandler("about", info_handler))
     application.add_handler(CommandHandler("credits", credits_handler))
     application.add_handler(
         MessageHandler(filters.TEXT & ~filters.COMMAND, fallback_handler)

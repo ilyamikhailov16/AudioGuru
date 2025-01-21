@@ -94,7 +94,7 @@ class AudioGuru:
                 tag.append(
                     (
                         sorted_unique_values[i],
-                        round(sorted_counts[i] / sum_of_counts, 4),
+                        round(sorted_counts[i] / sum_of_counts, 2),
                     )
                 )
 

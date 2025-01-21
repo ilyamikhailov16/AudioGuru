@@ -72,7 +72,6 @@ class AudioProcessorGenre(AudioProcessor):
             )
             tempo, _ = librosa.beat.beat_track(y=y, sr=sr)
             mfcc = librosa.feature.mfcc(y=y, sr=sr, n_mfcc=20)
-            tempo = tempo.item()
 
             features = [
                 np.mean(chroma_stft),
