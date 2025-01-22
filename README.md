@@ -39,7 +39,7 @@ Trained models and trained scalers are saved as .pt and .save files in their mod
 We have 3 models and 3 audio processors for them:
 1) Genre Model.A simple FCNN (5700-5700-5700) with Dropout. ReLu activation in hidden layers. Input layer has 169 inputs and output layer has 10 outputs. For features extraction use an AudioProcessorGenre class instance
 2) Mood Model. A simple FCNN (2000-2000-2000) with Dropout. ReLu activation in hidden layers. Input layer has 162 inputs and output layer has 5 outputs. For features extraction use an AudioProcessorMood class instance
-3) Instrumental Model. A simple FCNN (2000-2000-2000) with Dropout. ReLu activation in hidden layers. Input layer has 57 inputs and output layer has 2 outputs. For features extraction use an AudioProcessorVoice class instance
+3) We want to implement Instrumental Model. A simple FCNN (2000-2000-2000) with Dropout. ReLu activation in hidden layers. Input layer has 57 inputs and output layer has 2 outputs. For features extraction use an AudioProcessorVoice class instance
 
 ## Contributing
 
