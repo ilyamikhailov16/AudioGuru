@@ -2,7 +2,7 @@
 
 ## Description
 
-This is a little library for genre, mood, tempo and instrumental tagging purposes that was made by group of IRIT-RTF students. 
+This is a little library for genre, mood, tempo tagging purposes that was made by group of IRIT-RTF students. 
 Our markup file solution gives additional information for your tracks, which can be useful in many ways. For example, you can implement a smart searching by combining music tags in your musical service.
 In general, it's just a package of models and it's assisting tools. You can freely install it and integrate in your applications. Even if you are not expierienced in machine learning, you can use it by simple interface, that gives easy access to interaction with models.
 If you want to dive into code, our documentation might help you https://ganjamember.github.io/audio-guru-documentation/index.html.
@@ -39,7 +39,6 @@ Trained models and trained scalers are saved as .pt and .save files in their mod
 We have 3 models and 3 audio processors for them:
 1) Genre Model.A simple FCNN (5700-5700-5700) with Dropout. ReLu activation in hidden layers. Input layer has 169 inputs and output layer has 10 outputs. For features extraction use an AudioProcessorGenre class instance
 2) Mood Model. A simple FCNN (2000-2000-2000) with Dropout. ReLu activation in hidden layers. Input layer has 162 inputs and output layer has 5 outputs. For features extraction use an AudioProcessorMood class instance
-3) We want to implement Instrumental Model. A simple FCNN (2000-2000-2000) with Dropout. ReLu activation in hidden layers. Input layer has 57 inputs and output layer has 2 outputs. For features extraction use an AudioProcessorVoice class instance
 
 ## Contributing
 
@@ -64,8 +63,4 @@ We have used Sphinx for the documentation creation and Github Pages for a web-si
 The datasets we have used for training (they are stored in the DATA folder):
 1) GZTAN (80% training / 20% testing). Before training we preprocessed audio files using these parameters: native serialization rate, mono channel, 32 bit. Each track is divided into fragments 3s in length.
 2) mood-music-classification (80% training / 20% testing) from Kaggle. For audio preprocessing we used KaggleX: Recognizing Emotions in Music, by Diksha Srivastava
-3) NSyth (80% training / 20% testing) from Google Magenta.
-Jesse Engel, Cinjon Resnick, Adam Roberts, Sander Dieleman, Douglas Eck,
-Karen Simonyan, and Mohammad Norouzi. "Neural Audio Synthesis of Musical Notes
-with WaveNet Autoencoders." 2017.
 

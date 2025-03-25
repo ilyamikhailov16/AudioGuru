@@ -1,6 +1,5 @@
 from .models.mood_model import MoodModel, AudioProcessorMood
 from .models.genre_model import GenreModel, AudioProcessorGenre
-from .models.voice_model import VoiceModel, AudioProcessorVoice
 import numpy as np
 from typing import Union
 from numpy import ndarray
@@ -18,11 +17,11 @@ class AudioGuru:
 
     def __init__(self) -> None:
         """Initializes AudioGuru, loads models, and sets up audio processors."""
-        self.models = [MoodModel(), GenreModel()]  # VoiceModel()
+        self.models = [MoodModel(), GenreModel()]
         self.audio_processors = [
             AudioProcessorMood(),
             AudioProcessorGenre(),
-        ]  # AudioProcessorVoice()
+        ]  
         self._set_up_models()
 
     def _set_up_models(self) -> None:
