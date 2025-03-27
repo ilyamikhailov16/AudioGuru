@@ -2,7 +2,7 @@
 
 ## Description
 
-This is a little library for genre, mood, tempo tagging purposes that was made by group of IRIT-RTF students. 
+This is a little library for genre, mood, tempo tagging purposes that was made by group of UrFU IRIT-RTF students. 
 Our markup file solution gives additional information for your tracks, which can be useful in many ways. For example, you can implement a smart searching by combining music tags in your musical service.
 In general, it's just a package of models and it's assisting tools. You can freely install it and integrate in your applications. Even if you are not expierienced in machine learning, you can use it by simple interface, that gives easy access to interaction with models.
 If you want to dive into code, our documentation might help you https://ganjamember.github.io/audio-guru-documentation/index.html.
