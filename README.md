@@ -37,7 +37,7 @@ Models with dependencies are stored in aglib.models package. You can test and tr
 Trained models and trained scalers are saved as .pt and .save files in their models packages. To load them use Model.load_model() and AudioProcessor.load_scaler() in your scripts.
 
 We have 3 models and 3 audio processors for them:
-1) Genre Model.A simple FCNN (5700-5700-5700) with Dropout. ReLu activation in hidden layers. Input layer has 169 inputs and output layer has 10 outputs. For features extraction use an AudioProcessorGenre class instance
+1) Genre Model.A simple FCNN (5700-5700-5700) with Dropout. ReLu activation in hidden layers. Input layer has 57 inputs and output layer has 10 outputs. For features extraction use an AudioProcessorGenre class instance
 2) Mood Model. A simple FCNN (2000-2000-2000) with Dropout. ReLu activation in hidden layers. Input layer has 162 inputs and output layer has 5 outputs. For features extraction use an AudioProcessorMood class instance
 
 ## Contributing
